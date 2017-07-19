@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Module elasticsearch_req</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module elasticsearch_req</h1>
+<ul class="index"><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>
+
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#build_url-3">build_url/3</a></td><td>Obtains an URL string formed with a base URL appending a set of segments slash-separated forming a path, and
+  a set of key-value pairs forming an Query string (rfc3986).</td></tr>
+<tr><td valign="top"><a href="#direct-4">direct/4</a></td><td>Equivalent to <a href="#direct-6"><tt>direct(Endpoint, Method, Headers, Body, callback,
+       callback)</tt></a>.
+</td></tr>
+<tr><td valign="top"><a href="#direct-6">direct/6</a></td><td>Performs a direct http request using httpc library.</td></tr>
+<tr><td valign="top"><a href="#encode-1">encode/1</a></td><td>Returns a json encoded string.</td></tr>
+<tr><td valign="top"><a href="#params-2">params/2</a></td><td>Returns Endpoint if Params is an empty list, otherwise will
+  build an url query string using the params and will concat with the endpoint.</td></tr>
+<tr><td valign="top"><a href="#plain-1">plain/1</a></td><td>Equivalent to <a href="#plain-2"><tt>plain(Endpoint, get)</tt></a>.
+</td></tr>
+<tr><td valign="top"><a href="#plain-2">plain/2</a></td><td>Equivalent to <a href="#req-5"><tt>req(Endpoint, Method, [], [], text)</tt></a>.
+</td></tr>
+<tr><td valign="top"><a href="#req-1">req/1</a></td><td>Equivalent to <a href="#req-2"><tt>req(Endpoint, get)</tt></a>.
+</td></tr>
+<tr><td valign="top"><a href="#req-2">req/2</a></td><td>Equivalent to <a href="#req-3"><tt>req(Endpoint, Method, [])</tt></a>.
+</td></tr>
+<tr><td valign="top"><a href="#req-3">req/3</a></td><td>Equivalent to <a href="#req-4"><tt>req(Endpoint, Method, Headers, [])</tt></a>.
+</td></tr>
+<tr><td valign="top"><a href="#req-4">req/4</a></td><td>Equivalent to <a href="#req-5"><tt>req(Endpoint, Method, Headers, Body, callback())</tt></a>.
+</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="build_url-3">build_url/3</a></h3>
+<div class="spec">
+<p><tt>build_url(BaseEndpoint::string(), Segments::[string()], Values::[{Key::string(), Val::string()}]) -&gt; string()</tt><br></p>
+</div><p>Obtains an URL string formed with a base URL appending a set of segments slash-separated forming a path, and
+  a set of key-value pairs forming an Query string (rfc3986).
+ </p>
+
+<h3 class="function"><a name="direct-4">direct/4</a></h3>
+<div class="spec">
+<p><tt>direct(Endpoint::string() | list(), Method::atom(), Headers::list(), Body::term()) -&gt; term()</tt><br></p>
+</div><p>Equivalent to <a href="#direct-6"><tt>direct(Endpoint, Method, Headers, Body, callback,
+       callback)</tt></a>.</p>
+
+
+<h3 class="function"><a name="direct-6">direct/6</a></h3>
+<div class="spec">
+<p><tt>direct(Endpoint::string() | list(), Method::atom(), Headers::list(), Body::term(), Success::term(), Error::term()) -&gt; term()</tt><br></p>
+</div><p>Performs a direct http request using httpc library</p>
+
+<h3 class="function"><a name="encode-1">encode/1</a></h3>
+<div class="spec">
+<p><tt>encode(Json::term()) -&gt; binary()</tt><br></p>
+</div><p>Returns a json encoded string</p>
+
+<h3 class="function"><a name="params-2">params/2</a></h3>
+<div class="spec">
+<p><tt>params(Endpoint::string() | list(), Params::list()) -&gt; list()</tt><br></p>
+</div><p>Returns Endpoint if Params is an empty list, otherwise will
+  build an url query string using the params and will concat with the endpoint</p>
+
+<h3 class="function"><a name="plain-1">plain/1</a></h3>
+<div class="spec">
+<p><tt>plain(Endpoint::string() | list()) -&gt; term()</tt><br></p>
+</div><p>Equivalent to <a href="#plain-2"><tt>plain(Endpoint, get)</tt></a>.</p>
+
+
+<h3 class="function"><a name="plain-2">plain/2</a></h3>
+<div class="spec">
+<p><tt>plain(Endpoint::string() | list(), Method::atom()) -&gt; term()</tt><br></p>
+</div><p>Equivalent to <a href="#req-5"><tt>req(Endpoint, Method, [], [], text)</tt></a>.</p>
+
+
+<h3 class="function"><a name="req-1">req/1</a></h3>
+<div class="spec">
+<p><tt>req(Endpoint::string() | list()) -&gt; term()</tt><br></p>
+</div><p>Equivalent to <a href="#req-2"><tt>req(Endpoint, get)</tt></a>.</p>
+
+
+<h3 class="function"><a name="req-2">req/2</a></h3>
+<div class="spec">
+<p><tt>req(Endpoint::string() | list(), Method::atom()) -&gt; term()</tt><br></p>
+</div><p>Equivalent to <a href="#req-3"><tt>req(Endpoint, Method, [])</tt></a>.</p>
+
+
+<h3 class="function"><a name="req-3">req/3</a></h3>
+<div class="spec">
+<p><tt>req(Endpoint::string() | list(), Method::atom(), Headers::list()) -&gt; term()</tt><br></p>
+</div><p>Equivalent to <a href="#req-4"><tt>req(Endpoint, Method, Headers, [])</tt></a>.</p>
+
+
+<h3 class="function"><a name="req-4">req/4</a></h3>
+<div class="spec">
+<p><tt>req(Endpoint::string() | list(), Method::atom(), Headers::list(), Body::term()) -&gt; term()</tt><br></p>
+</div><p>Equivalent to <a href="#req-5"><tt>req(Endpoint, Method, Headers, Body, callback())</tt></a>.</p>
+
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc, Jul 19 2017, 14:54:36.</i></p>
+</body>
+</html>

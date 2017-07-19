@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Module elasticsearch</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module elasticsearch</h1>
+<ul class="index"><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>
+
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#bulk-1">bulk/1</a></td><td>Performs a bulk indexing operation against the cluster, this operation
+  performed directly without using the connection pool to avoid gen_server timeouts.</td></tr>
+<tr><td valign="top"><a href="#count-3">count/3</a></td><td>Equivalent to <a href="#count-4"><tt>count(Index, Type, Query, [])</tt></a>.
+</td></tr>
+<tr><td valign="top"><a href="#count-4">count/4</a></td><td>Gets the count for the given search query.</td></tr>
+<tr><td valign="top"><a href="#create_index-1">create_index/1</a></td><td>Equivalent to <a href="#create_index-2"><tt>create_index(Name, {Shards, Replicas})</tt></a>.
+</td></tr>
+<tr><td valign="top"><a href="#create_index-2">create_index/2</a></td><td>Creates an index using the given configuration.</td></tr>
+<tr><td valign="top"><a href="#delete-1">delete/1</a></td><td>Checks if the path exists then deletes it.</td></tr>
+<tr><td valign="top"><a href="#delete-2">delete/2</a></td><td>Issues a delete for the given path, will error if the path doesn't exist
+  to delete safely use delete/1.</td></tr>
+<tr><td valign="top"><a href="#get-1">get/1</a></td><td>Issues a get request to the cluster no matter what the path is
+  if the path was not found it will return an empty list "[]".</td></tr>
+<tr><td valign="top"><a href="#mapping-3">mapping/3</a></td><td>Checks if the mapping exists, otherwise creates it.</td></tr>
+<tr><td valign="top"><a href="#ping-0">ping/0</a></td><td>Gets the cluster health value.</td></tr>
+<tr><td valign="top"><a href="#scroll-4">scroll/4</a></td><td></td></tr>
+<tr><td valign="top"><a href="#scroll-5">scroll/5</a></td><td></td></tr>
+<tr><td valign="top"><a href="#search-3">search/3</a></td><td>Equivalent to <a href="#search-4"><tt>search(Index, Type, Query, [])</tt></a>.
+</td></tr>
+<tr><td valign="top"><a href="#search-4">search/4</a></td><td>Gets the documents for the given search query.</td></tr>
+<tr><td valign="top"><a href="#test-0">test/0</a></td><td></td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="bulk-1">bulk/1</a></h3>
+<div class="spec">
+<p><tt>bulk(Bulk::list()) -&gt; term()</tt><br></p>
+<p><tt>Bulk</tt>: is [ {Index, Type, Id, Json}, {Index, Type, Id, HeaderInformation, Json}... ]<br>
+</p>
+</div><p>Performs a bulk indexing operation against the cluster, this operation
+  performed directly without using the connection pool to avoid gen_server timeouts</p>
+
+<h3 class="function"><a name="count-3">count/3</a></h3>
+<div class="spec">
+<p><tt>count(Index::list(), Type::list(), Query::list()) -&gt; term()</tt><br></p>
+</div><p>Equivalent to <a href="#count-4"><tt>count(Index, Type, Query, [])</tt></a>.</p>
+
+
+<h3 class="function"><a name="count-4">count/4</a></h3>
+<div class="spec">
+<p><tt>count(Index::list(), Type::list(), Query::list(), Params::list()) -&gt; term()</tt><br></p>
+</div><p>Gets the count for the given search query</p>
+
+<h3 class="function"><a name="create_index-1">create_index/1</a></h3>
+<div class="spec">
+<p><tt>create_index(Name::list()) -&gt; term()</tt><br></p>
+</div><p>Equivalent to <a href="#create_index-2"><tt>create_index(Name, {Shards, Replicas})</tt></a>.</p>
+
+
+<h3 class="function"><a name="create_index-2">create_index/2</a></h3>
+<div class="spec">
+<p><tt>create_index(Name::list(), Settings::{Shards::integer(), Replicas::integer()}) -&gt; term()</tt><br></p>
+<p><tt>Name</tt>: name if the index to create<br>
+</p>
+</div><p>Creates an index using the given configuration</p>
+
+<h3 class="function"><a name="delete-1">delete/1</a></h3>
+<div class="spec">
+<p><tt>delete(Path::term()) -&gt; term()</tt><br></p>
+</div><p>Checks if the path exists then deletes it</p>
+
+<h3 class="function"><a name="delete-2">delete/2</a></h3>
+<div class="spec">
+<p><tt>delete(Path::term(), X2::boolean()) -&gt; term()</tt><br></p>
+</div><p>Issues a delete for the given path, will error if the path doesn't exist
+  to delete safely use delete/1</p>
+
+<h3 class="function"><a name="get-1">get/1</a></h3>
+<div class="spec">
+<p><tt>get(Path::term()) -&gt; term()</tt><br></p>
+</div><p>Issues a get request to the cluster no matter what the path is
+  if the path was not found it will return an empty list "[]"</p>
+
+<h3 class="function"><a name="mapping-3">mapping/3</a></h3>
+<div class="spec">
+<p><tt>mapping(Index::list(), Type::list(), Json::list() | binary()) -&gt; term()</tt><br></p>
+</div><p>Checks if the mapping exists, otherwise creates it</p>
+
+<h3 class="function"><a name="ping-0">ping/0</a></h3>
+<div class="spec">
+<p><tt>ping() -&gt; string()</tt><br></p>
+</div><p>Gets the cluster health value</p>
+
+<h3 class="function"><a name="scroll-4">scroll/4</a></h3>
+<div class="spec">
+<p><tt>scroll(Index, Type, Query, Callback) -&gt; any()</tt></p>
+</div>
+
+<h3 class="function"><a name="scroll-5">scroll/5</a></h3>
+<div class="spec">
+<p><tt>scroll(Index, Type, Query, Callback, Params) -&gt; any()</tt></p>
+</div>
+
+<h3 class="function"><a name="search-3">search/3</a></h3>
+<div class="spec">
+<p><tt>search(Index::list(), Type::list(), Query::list()) -&gt; term()</tt><br></p>
+</div><p>Equivalent to <a href="#search-4"><tt>search(Index, Type, Query, [])</tt></a>.</p>
+
+
+<h3 class="function"><a name="search-4">search/4</a></h3>
+<div class="spec">
+<p><tt>search(Index::list(), Type::list(), Query::list(), Params::list()) -&gt; term()</tt><br></p>
+</div><p>Gets the documents for the given search query</p>
+
+<h3 class="function"><a name="test-0">test/0</a></h3>
+<div class="spec">
+<p><tt>test() -&gt; any()</tt></p>
+</div>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc, Jul 19 2017, 14:54:36.</i></p>
+</body>
+</html>

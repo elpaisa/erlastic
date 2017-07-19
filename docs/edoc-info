@@ -1,0 +1,4 @@
+%% encoding: UTF-8
+{application,elasticsearch}.
+{modules,[elasticsearch,elasticsearch_app,elasticsearch_req,elasticsearch_srv,
+          elasticsearch_sup]}.
