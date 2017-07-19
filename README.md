@@ -41,4 +41,4 @@ bulk/2 | {Index, Type}, term() | uses bulk api to push documents into elasticsea
 An erlang client for elasticsearch's REST interface
 
 [email]: mailto:clientes@desarrollowebmedellin.com
-[api-documentation]: https://github.com/pages/erlasticsearch/
+[api-documentation]: https://elpaisa.github.io/erlastic/
