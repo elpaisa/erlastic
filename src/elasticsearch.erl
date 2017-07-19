@@ -1,23 +1,9 @@
 %%% Created : 09. Mar 2017 2:40 PM
 %%% @author johnleytondiaz
 %%% @copyright (C) 2017, jdiaz
-%%% @doc This elasticsearch application implements an HTTP 1.1 client in erlang.
-%% This module abstracts the most common operations to perform against an
-%% elasticsearch cluster
-%%
-%% <p>Here are a few sample invocations.</p>
-%%
-%% <code>
-%% [{<<"acknowledged">>, true}] = create_index("test-index").
-%% <br/><br/>
-%%
-%% [{<<"acknowledged">>, true}] = mapping("test-index", "test_type", JsonString).
-%% <br/><br/>
-%%
-%% count("test-index", "test_type", Query).
-%% scroll("test-index", "test_type", Query).
-%% <br/>
-%% </code>
+%%% @doc This elasticsearch application implements an HTTP 1.1 client in erlang
+%%% This module abstracts the most common operations to perform against an
+%%% elasticsearch cluster.
 -module(elasticsearch).
 
 -include("elasticsearch.hrl").
@@ -29,7 +15,7 @@
 -export([delete/1, delete/2, mapping/3]).
 
 %% Indexing operations
--export([bulk/1]).
+-export([bulk/1, update/4, update/5]).
 
 %% Search operations
 -export([scroll/4, scroll/5, search/3, search/4, count/3, count/4, get/1]).
@@ -262,3 +248,15 @@ count(Index, Type, Query, Params) ->
 %% if the path was not found it will return an empty list "[]"
 get(Path)->
   elasticsearch_req:req(Path).
+
+-spec update(Index :: list(), Type :: list(), Id :: list(), Doc :: term()) -> term().
+%% @equiv update(Index, Type, Id, Doc, [])
+update(Index, Type, Id, Doc) ->
+  update(Index, Type, Id, Doc, []).
+
+-spec update(Index :: list(), Type :: list(), Id :: list(), Doc :: term(), Params :: list()
+) -> term().
+%% @doc Updates a document in the cluster by its id
+update(Index, Type, Id, Doc, Params) ->
+  E = elasticsearch_req:params([Index, Type, Id, <<"_update">>], Params),
+  elasticsearch_req:req(E, post, [], Doc).
