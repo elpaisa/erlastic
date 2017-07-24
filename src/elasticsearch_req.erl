@@ -73,7 +73,6 @@ req(Endpoint, Method, Headers, Body, Success)->
 req(Endpoint, Method, Headers, Body, Success, Error)->
   Opt = elasticsearch_app:get_env(options, []),
   Timeout = elasticsearch_app:get_env(timeout, 30000),
-  io:format("URL ~p ~n~n=====~n", [url(Endpoint)]),
   R = ibrowse:send_req(url(Endpoint), Headers, Method, encode(Body), Opt, Timeout),
   response(R, Endpoint, Method, Success, Error).
 
