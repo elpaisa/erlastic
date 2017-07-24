@@ -155,6 +155,8 @@ delete(Path, true) ->
 %% @doc Performs a bulk indexing operation against the cluster, this operation
 %% performed directly without using the connection pool to avoid gen_server timeouts
 %% @param Bulk is [ {Index, Type, Id, Json}, {Index, Type, Id, HeaderInformation, Json}... ]
+bulk([])->
+  [];
 bulk(Bulk) ->
   JsonList = [parse_bulk(B) || B <- Bulk],
   elasticsearch_req:direct("_bulk", post, [], iolist_to_binary(JsonList)).
