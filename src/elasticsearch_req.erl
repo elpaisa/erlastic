@@ -139,6 +139,8 @@ endpoint(Endpoint, true)->
   utils:need_list(Endpoint);
 endpoint([], false)->
   "";
+endpoint(E, false) when is_atom(E) =:= true orelse is_binary(E) =:= true ->
+  utils:need_list(E);
 endpoint(Endpoint, false)->
   Tokens = [utils:need_list(E) || E <- Endpoint],
   lists:flatten(lists:join("/", Tokens)).
