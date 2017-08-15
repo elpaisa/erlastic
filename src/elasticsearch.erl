@@ -18,7 +18,7 @@
 -export([bulk/1, update/4, update/5]).
 
 %% Search operations
--export([scroll/4, scroll/5, search/3, search/4, count/3, count/4, get/1]).
+-export([scroll/4, scroll/5, search/3, search/4, count/1, count/3, count/4, get/1]).
 
 test() ->
   %%delete("test-index"),
@@ -233,6 +233,12 @@ search(Index, Type, Query) ->
 search(Index, Type, Query, Params) ->
   E = elasticsearch_req:params([Index, Type, <<"_search">>], Params),
   elasticsearch_req:req(E, post, [], Query).
+
+-spec count(Query :: term()) -> term().
+%% @doc Performs a _count query against the cluster
+%% see: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html
+count(Query)->
+  elasticsearch_req:req([<<"_count">>], post, [], Query).
 
 -spec count(Index :: list(), Type :: list(), Query :: list()) -> term().
 %% @equiv count(Index, Type, Query, [])
