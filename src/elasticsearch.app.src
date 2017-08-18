@@ -23,8 +23,7 @@
           %%{proxy_user, ""},
           %%{proxy_password, ""},
           %%{proxy_host, ""},
-          %%{proxy_port, 8080},
-          %%{basic_auth, {"", ""}
+          %%{proxy_port, 8080}
       ]}
   ]},
   {modules, []},

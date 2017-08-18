@@ -71,10 +71,19 @@ req(Endpoint, Method, Headers, Body, Success)->
 %% use of gen_server which will fail if response takes longer than OTP gen_server
 %% timeout, for long running requests please use direct/6
 req(Endpoint, Method, Headers, Body, Success, Error)->
-  Opt = elasticsearch_app:get_env(options, []),
+  Opt = auth(elasticsearch_app:get_env(options, [])),
   Timeout = elasticsearch_app:get_env(timeout, 30000),
   R = ibrowse:send_req(url(Endpoint), Headers, Method, encode(Body), Opt, Timeout),
   response(R, Endpoint, Method, Success, Error).
+
+
+auth(Opts)->
+  auth(Opts, elasticsearch_app:get_env(basic_auth)).
+
+auth(Opts, {Usr, Pass})->
+  lists:append(Opts, [{basic_auth, {Usr, Pass}}]);
+auth(Opts, _)->
+  Opts.
 
 -spec direct(Endpoint :: string() | list(), Method :: atom(),
     Headers :: list(), Body :: term()
@@ -209,8 +218,22 @@ encode(Doc) when is_list(Doc); is_tuple(Doc); is_map(Doc) ->
     Headers :: list()) -> term().
 %% @private Builds a tuple with the request parameters to be passed to httpc request
 get_direct_request(Url, Method, _, Headers) when Method =/= post, Method =/= put ->
-  Length = [{"Content-Length", 0}],
-  {Url, lists:ukeysort(1, Headers ++ Length)};
+  AddHeaders = http_headers(0),
+  {Url, lists:ukeysort(1, Headers ++ AddHeaders)};
 get_direct_request(Url, _, Body, Headers)->
-  Length = [{"Content-Length", utils:need_list(erlang:iolist_size(Body))}],
-  {Url, lists:ukeysort(1, Headers ++ Length), "application/json", Body}.
+  AddHeaders = http_headers(utils:need_list(erlang:iolist_size(Body))),
+  {Url, lists:ukeysort(1, Headers ++ AddHeaders), "application/json", Body}.
+
+-spec http_headers(Length :: integer()) -> list().
+%% @private Builds a a list of headers with authentication and content-length
+http_headers(Length)->
+  http_headers([{"Content-Length", Length}],  elasticsearch_app:get_env(basic_auth)).
+
+-spec http_headers(Length :: integer(), Auth :: term()) -> list().
+%% @private Builds a a list of headers with authentication and content-length
+http_headers(Headers, {Usr, Pass})->
+  Auth = utils:need_list(Usr) ++ ":" ++ utils:need_list(Pass) ,
+  AuthHeader = [{"Authorization", "Basic " ++ base64:encode_to_string(Auth)}],
+  lists:append(Headers, AuthHeader);
+http_headers(Headers, _)->
+  Headers.

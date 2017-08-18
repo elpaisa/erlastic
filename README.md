@@ -10,6 +10,25 @@ of documents to the cluster, also there is an `scroll` function that allows to s
 a set of results from the cluster, that helps to get a big quantity of documents using an
 iterator, and process them as they are retrieved until the result set is done.
 
+## Configuration
+```erlang
+%%-*- mode: erlang -*-
+[
+    {elasticsearch, [
+      {host, "localhost"},
+      {port, 9200},
+      {ssl, false},
+      {max_sessions, 10},
+      {shards, 2},
+      {replicas, 1},
+      {max_pipeline_size, 1},
+      {http_options, [{timeout, 1500000}]},
+      {basic_auth, {"fake-user", "fake-pass"}}
+    ]}
+].
+% vim:ft=erlang
+```
+
 ## Ownership
 
 This project is supported by John Diaz, email me for any issues [email][email]
