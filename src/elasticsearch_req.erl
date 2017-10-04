@@ -7,6 +7,8 @@
 
 -include("elasticsearch.hrl").
 
+-define(ENV_ELASTICSEARCH_HOST, os:getenv("ENV_ELASTICSEARCH_HOST")).
+
 %% main request functions
 -export([direct/4, direct/6, req/1, req/2, req/3, req/4, plain/1]).
 %% Misc
@@ -139,7 +141,7 @@ join(K, V)->
 url(E)->
   Endpoint = endpoint(E, utils:is_string(E)),
   Port = utils:need_list(elasticsearch_app:get_env(port, 9200)),
-  Host = elasticsearch_app:get_env(host, "localhost") ++ ":" ++ Port,
+  Host = get_host(elasticsearch_app:get_env(host, "localhost")) ++ ":" ++ Port,
   protocol() ++ Host ++ "/" ++ Endpoint.
 
 -spec endpoint(E :: string() | list(), boolean()) -> list().
@@ -237,3 +239,17 @@ http_headers(Headers, {Usr, Pass})->
   lists:append(Headers, AuthHeader);
 http_headers(Headers, _)->
   Headers.
+
+-spec get_host(Host :: string() | environment_var) -> string().
+%% @private Gets the hostname of the cluster from environment or config string
+get_host(environment_var)->
+  host_is_there(?ENV_ELASTICSEARCH_HOST);
+get_host(Url)->
+  Url.
+
+-spec host_is_there(Host :: string() | boolean()) -> string().
+%% @private Defaults to localhost if no host is found in the environment vars
+host_is_there(false)->
+  "localhost";
+host_is_there(Host)->
+  Host.

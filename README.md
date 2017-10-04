@@ -10,12 +10,15 @@ of documents to the cluster, also there is an `scroll` function that allows to s
 a set of results from the cluster, that helps to get a big quantity of documents using an
 iterator, and process them as they are retrieved until the result set is done.
 
+If `environment_var` atom is used as host, the module will look in the `os:getenv(ENV_ELASTICSEARCH_HOST)`
+for the hostname, if var is not yet defined it will default to `localhost`.
+
 ## Configuration
 ```erlang
 %%-*- mode: erlang -*-
 [
     {elasticsearch, [
-      {host, "localhost"},
+      {host, "localhost"}, %% or environment_var atom
       {port, 9200},
       {ssl, false},
       {max_sessions, 10},
